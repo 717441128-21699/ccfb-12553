@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>输电线路弧垂三维校核</title>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>输电线路弧垂三维校核工具</h1>
+        <span class="meta">悬链线精确解算 · 高温/覆冰/大风三工况 · 净空距离自动校核</span>
+        <span class="spacer"></span>
+        <span class="meta">WebGL2 · TypeScript</span>
+      </header>
+
+      <aside class="panel left">
+        <div class="section">
+          <h2>数据导入</h2>
+          <button class="btn primary" id="btnSample">载入内置示例（30 基塔山区线路）</button>
+          <button class="btn" id="btnFileProject">导入工程 JSON</button>
+          <button class="btn" id="btnFileTerrain">导入地形 XYZ/CSV</button>
+          <button class="btn" id="btnFileTowers">导入塔位 CSV</button>
+          <input type="file" id="fileProject" accept=".json,application/json" />
+          <input type="file" id="fileTerrain" accept=".csv,.txt,.xyz" />
+          <input type="file" id="fileTowers" accept=".csv,.txt" />
+        </div>
+
+        <div class="section">
+          <h2>工程信息</h2>
+          <div id="projectMeta"><div class="empty">尚未载入工程</div></div>
+        </div>
+
+        <div class="section">
+          <h2>应力求解器</h2>
+          <select id="solverSelect" class="btn" style="width: 100%">
+            <option value="handbook">手册代表档距法（默认，与审图依据一致）</option>
+            <option value="exact">精确无应力线长守恒法（复核用）</option>
+          </select>
+        </div>
+
+        <div class="section">
+          <h2>图层显隐</h2>
+          <label class="toggle-row"><input type="checkbox" id="layerTerrain" checked /> 地形曲面</label>
+          <label class="toggle-row"><input type="checkbox" id="layerTowers" checked /> 杆塔</label>
+          <label class="toggle-row"><input type="checkbox" id="layerWires" checked /> 导线</label>
+          <label class="toggle-row"><input type="checkbox" id="layerObstacles" checked /> 树木 / 房屋</label>
+          <label class="toggle-row"><input type="checkbox" id="layerViolations" checked /> 违规标记</label>
+        </div>
+
+        <div class="section">
+          <h2>图例</h2>
+          <div class="legend">
+            <div><span class="dot" style="background:#d96129"></span>高温工况导线</div>
+            <div><span class="dot" style="background:#73b8eb"></span>覆冰工况导线</div>
+            <div><span class="dot" style="background:#598cf2"></span>大风工况导线（含风偏）</div>
+            <div><span class="dot" style="background:#f21f1a"></span>净空违规点</div>
+            <div><span class="dot" style="background:#ffd933"></span>违规距离连线</div>
+          </div>
+        </div>
+      </aside>
+
+      <main id="viewport">
+        <canvas id="glCanvas"></canvas>
+        <div class="hint">左键拖拽旋转 · 滚轮缩放 · 右侧切换工况查看风偏与违规</div>
+      </main>
+
+      <aside class="panel right">
+        <div class="section">
+          <h2>性能与统计</h2>
+          <div id="perfStats" class="stat-grid"><div class="empty">尚未解算</div></div>
+        </div>
+
+        <div class="section">
+          <h2>气象工况</h2>
+          <div id="caseButtons"></div>
+        </div>
+
+        <div class="section">
+          <h2>净空违规列表（当前工况）</h2>
+          <div id="violationList"><div class="empty">暂无数据</div></div>
+        </div>
+      </aside>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
