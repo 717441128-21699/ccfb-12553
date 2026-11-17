@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GaitLab 步态分析回放系统</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand">🦶 GaitLab <span>步态分析与骨骼回放</span></div>
+        <nav class="tabs" id="tabs">
+          <button class="tab active" data-tab="patient">患者</button>
+          <button class="tab" data-tab="capture">动捕载入</button>
+          <button class="tab" data-tab="playback">动画回放</button>
+          <button class="tab" data-tab="curves">关节曲线</button>
+          <button class="tab" data-tab="report">对比报告</button>
+        </nav>
+        <div class="ctx" id="ctxInfo">未选择患者</div>
+      </header>
+      <main id="views"></main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
